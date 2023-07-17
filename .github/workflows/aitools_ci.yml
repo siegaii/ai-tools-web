@@ -1,0 +1,42 @@
+name: Publish And Deploy
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Build
+        uses: actions/setup-node@v3
+        with:
+         node-version: 18
+      - run: npm install -g pnpm
+      - run: pnpm install
+      - run: pnpm build
+      - name: Deploy
+        uses: cross-the-world/ssh-scp-ssh-pipelines@v1.1.4
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        with:
+          host: ${{ secrets.HOST }}
+          user: ${{ secrets.USERNAME }}
+          pass: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          connect_timeout: 10s
+          first_ssh: |
+            rm -rf /root/ai-tools-web/*
+          scp: |
+            './dist' => /root/ai-tools-web/
+            './nginx' => /root/ai-tools-web/
+            './Dockerfile' => /root/ai-tools-web/
+            './deploy.sh' => /root/ai-tools-web/
+            './.dockerignore' => /root/ai-tools-web/
+          last_ssh: |
+            export OPENAI_API_KEY=$OPENAI_API_KEY
+            cd /root/ai-tools-web
+            chmod +x deploy.sh
+            ./deploy.sh
