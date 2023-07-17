@@ -40,8 +40,6 @@ docker run -itd \
 -p 80:80 \
 -p 443:443 \
 -v /root/ai-tools-web/dist:/usr/share/nginx/html \
--v /root/ai-tools-web/nginx/nginx.conf:/etc/nginx/nginx.conf:ro \
--v /etc/letsencrypt/live/siegaii.com:/etc/nginx/ssl \
 --name $image_name \
 $image_name
 
