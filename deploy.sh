@@ -36,17 +36,10 @@ fi
 
 docker build --no-cache -t $image_name .
 
-# docker run -itd \
-# -p 80:80 \
-# -p 443:443 \
-# -v /root/ai-tools-web/dist:/usr/share/nginx/html \
-# --name $image_name \
-# $image_name
-
 docker run -itd \
 -p 80:80 \
 -p 443:443 \
--v /Users/lizeyu/project/yftools/ai-tools/ai-tools-web/dist:/usr/share/nginx/html \
+-v /root/ai-tools-web/dist:/usr/share/nginx/html \
 --name $image_name \
 $image_name
 
