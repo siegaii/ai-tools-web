@@ -1,3 +1,4 @@
+import config from '../../../../config.json'
 import { ss } from '@/utils/storage'
 
 const LOCAL_NAME = 'userStorage'
@@ -6,6 +7,7 @@ export interface UserInfo {
   avatar: string
   name: string
   description: string
+  defaultAvatar: string
 }
 
 export interface UserState {
@@ -15,7 +17,8 @@ export interface UserState {
 export function defaultSetting(): UserState {
   return {
     userInfo: {
-      avatar: 'https://www.loliapi.com/acg/pp/',
+      avatar: '',
+      defaultAvatar: config.user.defaultAvatar,
       name: 'master',
       description: 'Hello Master',
     },
