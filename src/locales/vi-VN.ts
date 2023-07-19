@@ -8,6 +8,7 @@ export default {
     deleteSuccess: 'Xóa thành công',
     save: 'Lưu',
     saveSuccess: 'Lưu thành công',
+    select: 'Select',
     reset: 'Đặt lại',
     action: 'Hành động',
     export: 'Xuất',

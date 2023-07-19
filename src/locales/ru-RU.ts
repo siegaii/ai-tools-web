@@ -8,6 +8,7 @@ export default {
     deleteSuccess: 'Удалено успешно',
     save: 'Сохранить',
     saveSuccess: 'Сохранено успешно',
+    select: 'Select',
     reset: 'Сбросить',
     action: 'Действие',
     export: 'Экспортировать',
@@ -26,7 +27,7 @@ export default {
     failed: 'Не удалось',
     verify: 'Проверить',
     unauthorizedTips: 'Не авторизован, сначала подтвердите свою личность.',
-		stopResponding: 'Прекращение отклика',
+    stopResponding: 'Прекращение отклика',
   },
   chat: {
     newChatButton: 'Новый чат',

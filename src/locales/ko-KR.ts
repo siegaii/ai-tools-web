@@ -6,6 +6,7 @@ export default {
     editSuccess: '편집 성공',
     delete: '삭제',
     deleteSuccess: '삭제 성공',
+    select: 'Select',
     save: '저장',
     saveSuccess: '저장 성공',
     reset: '초기화',
@@ -26,7 +27,7 @@ export default {
     failed: '실패',
     verify: '검증',
     unauthorizedTips: '인증되지 않았습니다. 먼저 확인하십시오.',
-		stopResponding: '응답 중지',
+    stopResponding: '응답 중지',
   },
   chat: {
     newChatButton: '새로운 채팅',

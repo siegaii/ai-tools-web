@@ -8,6 +8,7 @@ export default {
     deleteSuccess: '刪除成功',
     save: '儲存',
     saveSuccess: '儲存成功',
+    select: '選擇',
     reset: '重設',
     action: '操作',
     export: '匯出',

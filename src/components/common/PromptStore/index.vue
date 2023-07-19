@@ -259,6 +259,10 @@ const pagination = computed(() => {
   }
 })
 
+const selectTemplate = (row: { key: string; value: string }) => {
+  show.value = false
+}
+
 // table相关
 const createColumns = (): DataTableColumns<DataProps> => {
   return [
@@ -296,6 +300,16 @@ const createColumns = (): DataTableColumns<DataProps> => {
               onClick: () => deletePromptTemplate(row),
             },
             { default: () => t('common.delete') },
+          ),
+          h(
+            NButton,
+            {
+              tertiary: true,
+              size: 'small',
+              type: 'info',
+              onClick: () => selectTemplate(row),
+            },
+            { default: () => t('common.select') },
           ),
           ],
         })

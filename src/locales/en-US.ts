@@ -6,6 +6,7 @@ export default {
     editSuccess: 'Edit Success',
     delete: 'Delete',
     deleteSuccess: 'Delete Success',
+    select: '选择',
     save: 'Save',
     saveSuccess: 'Save Success',
     reset: 'Reset',
@@ -26,7 +27,7 @@ export default {
     failed: 'Failed',
     verify: 'Verify',
     unauthorizedTips: 'Unauthorized, please verify first.',
-		stopResponding: 'Stop Responding',
+    stopResponding: 'Stop Responding',
   },
   chat: {
     newChatButton: 'New Chat',

@@ -6,6 +6,7 @@ export default {
     editSuccess: '编辑成功',
     delete: '删除',
     deleteSuccess: '删除成功',
+    select: '选择',
     save: '保存',
     saveSuccess: '保存成功',
     reset: '重置',
@@ -26,7 +27,7 @@ export default {
     failed: '操作失败',
     verify: '验证',
     unauthorizedTips: '未经授权，请先进行验证。',
-		stopResponding: '停止响应',
+    stopResponding: '停止响应',
   },
   chat: {
     newChatButton: '新建聊天',
