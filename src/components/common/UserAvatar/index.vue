@@ -8,6 +8,8 @@ import { getFallbackAvatar } from '@/utils/common'
 const userStore = useUserStore()
 
 const userInfo = computed(() => userStore.userInfo)
+
+const avatar = computed(() => userStore.userInfo.avatar || userStore.userInfo.defaultAvatar)
 </script>
 
 <template>
@@ -22,7 +24,7 @@ const userInfo = computed(() => userStore.userInfo)
         />
       </template>
       <template v-else>
-        <NAvatar size="large" round :src="userInfo.defaultAvatar" :fallback-src="getFallbackAvatar(userInfo.name)" />
+        <NAvatar size="large" round :src="avatar" :fallback-src="getFallbackAvatar(userInfo.name)" />
       </template>
     </div>
     <div class="flex-1 min-w-0 ml-2">
