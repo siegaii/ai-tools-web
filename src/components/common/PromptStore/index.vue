@@ -19,6 +19,7 @@ import {
 } from 'naive-ui'
 import PromptRecommend from '../../../assets/recommend.json'
 import { SvgIcon } from '..'
+import SureDelete from './SureDelete.vue'
 import { usePromptStore } from '@/store'
 import { useBasicLayout } from '@/hooks/useBasicLayout'
 import { t } from '@/locales'
@@ -107,8 +108,7 @@ const setDownloadURL = (url: string) => {
 // 控制 input 按钮
 const inputStatus = computed(
   () =>
-    tempPromptKey.value.trim().length < 1
-		|| tempPromptValue.value.trim().length < 1,
+    tempPromptKey.value.trim().length < 1 || tempPromptValue.value.trim().length < 1,
 )
 
 // Prompt模板相关操作
@@ -349,14 +349,10 @@ const createColumns = (): DataTableColumns<DataProps> => {
                 { default: () => t('common.edit') },
               ),
               h(
-                NButton,
+                SureDelete,
                 {
-                  tertiary: true,
-                  size: 'small',
-                  type: 'error',
-                  onClick: () => deletePromptTemplate(row),
+                  onDelete: () => deletePromptTemplate(row),
                 },
-                { default: () => t('common.delete') },
               ),
             ],
           },
@@ -461,21 +457,7 @@ const dataSource = computed(() => {
                   >
                     {{ t("common.edit") }}
                   </NButton>
-                  <NPopconfirm
-                    @positive-click="deletePromptTemplate(item)"
-                    @negative-click="() => {}"
-                  >
-                    <template #trigger>
-                      <NButton
-                        tertiary
-                        size="small"
-                        type="error"
-                      >
-                        {{ t("common.delete") }}
-                      </NButton>
-                    </template>
-                    {{ t("common.confirmOperation") }}: {{ t("common.delete") }}
-                  </NPopconfirm>
+                  <SureDelete :on-delete="() => deletePromptTemplate(item)" />
                 </div>
               </template>
             </NListItem>
