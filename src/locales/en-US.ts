@@ -28,6 +28,7 @@ export default {
     verify: 'Verify',
     unauthorizedTips: 'Unauthorized, please verify first.',
     stopResponding: 'Stop Responding',
+    confirmOperation: 'confirm operation',
   },
   chat: {
     newChatButton: 'New Chat',

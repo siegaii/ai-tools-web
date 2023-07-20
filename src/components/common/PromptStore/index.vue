@@ -474,7 +474,7 @@ const dataSource = computed(() => {
                         {{ t("common.delete") }}
                       </NButton>
                     </template>
-                    sure?
+                    {{ t("common.confirmOperation") }}: {{ t("common.delete") }}
                   </NPopconfirm>
                 </div>
               </template>
