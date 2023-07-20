@@ -15,6 +15,7 @@ import { useBasicLayout } from '@/hooks/useBasicLayout'
 import { useChatStore, usePromptStore } from '@/store'
 import { fetchChatAPIProcess } from '@/api'
 import { t } from '@/locales'
+import eventBus from '@/utils/eventBus'
 
 let controller = new AbortController()
 
@@ -81,7 +82,9 @@ async function onConversation() {
   scrollToBottom()
 
   loading.value = true
+
   prompt.value = ''
+
 
   let options: Chat.ConversationRequest = {}
   const lastContext = conversationList.value[conversationList.value.length - 1]?.conversationOptions
@@ -455,11 +458,17 @@ onMounted(() => {
   scrollToBottom()
   if (inputRef.value && !isMobile.value)
     inputRef.value?.focus()
+
+  eventBus.on("handleSelectPrompt", (p:string)=>{
+    prompt.value = p;
+  });
 })
 
 onUnmounted(() => {
   if (loading.value)
     controller.abort()
+
+  eventBus.off("handleSelectPrompt")
 })
 </script>
 

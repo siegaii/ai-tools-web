@@ -11,14 +11,10 @@ const props = defineProps(['onDelete'])
 const confirmDelete = () => {
   props.onDelete()
 }
-
-const cancelDelete = () => {
-  // Do nothing for canceling the delete action
-}
 </script>
 
 <template>
-  <NPopconfirm @positive-click="confirmDelete" @negative-click="cancelDelete">
+  <NPopconfirm @positive-click="confirmDelete">
     <template #trigger>
       <NButton tertiary size="small" type="error">
         {{ t("common.delete") }}

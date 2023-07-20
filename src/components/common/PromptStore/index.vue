@@ -37,6 +37,7 @@ interface Props {
 
 interface Emit {
   (e: 'update:visible', visible: boolean): void
+  (e: 'handleSelectPrompt', prompt: string): void
 }
 
 const props = defineProps<Props>()
@@ -280,14 +281,8 @@ const renderTemplate = () => {
 
   return promptList.value.map((item: { key: string; value: string }) => {
     return {
-      renderKey:
-				item.key.length <= keyLimit
-				  ? item.key
-				  : `${item.key.substring(0, keyLimit)}...`,
-      renderValue:
-				item.value.length <= valueLimit
-				  ? item.value
-				  : `${item.value.substring(0, valueLimit)}...`,
+      renderKey: item.key.length <= keyLimit ? item.key : `${item.key.substring(0, keyLimit)}...`,
+      renderValue: item.value.length <= valueLimit ? item.value : `${item.value.substring(0, valueLimit)}...`,
       key: item.key,
       value: item.value,
     }
@@ -303,6 +298,7 @@ const pagination = computed(() => {
 })
 
 const selectTemplate = (row: { key: string; value: string }) => {
+  emit('handleSelectPrompt', row.value)
   show.value = false
 }
 
