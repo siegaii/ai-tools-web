@@ -1,7 +1,22 @@
-<script setup lang='ts'>
+<script setup lang="ts">
 import type { DataTableColumns } from 'naive-ui'
 import { computed, h, ref, watch } from 'vue'
-import { NButton, NCard, NDataTable, NDivider, NInput, NList, NListItem, NModal, NPopconfirm, NSpace, NTabPane, NTabs, NThing, useMessage } from 'naive-ui'
+import {
+  NButton,
+  NCard,
+  NDataTable,
+  NDivider,
+  NInput,
+  NList,
+  NListItem,
+  NModal,
+  NPopconfirm,
+  NSpace,
+  NTabPane,
+  NTabs,
+  NThing,
+  useMessage,
+} from 'naive-ui'
 import PromptRecommend from '../../../assets/recommend.json'
 import { SvgIcon } from '..'
 import { usePromptStore } from '@/store'
@@ -61,7 +76,10 @@ const modalMode = ref('')
 const tempModifiedItem = ref<any>({})
 
 // 添加修改导入都使用一个Modal, 临时修改内容占用tempPromptKey,切换状态前先将内容都清楚
-const changeShowModal = (mode: 'add' | 'modify' | 'local_import', selected = { key: '', value: '' }) => {
+const changeShowModal = (
+  mode: 'add' | 'modify' | 'local_import',
+  selected = { key: '', value: '' },
+) => {
   if (mode === 'add') {
     tempPromptKey.value = ''
     tempPromptValue.value = ''
@@ -87,7 +105,11 @@ const setDownloadURL = (url: string) => {
 }
 
 // 控制 input 按钮
-const inputStatus = computed (() => tempPromptKey.value.trim().length < 1 || tempPromptValue.value.trim().length < 1)
+const inputStatus = computed(
+  () =>
+    tempPromptKey.value.trim().length < 1
+		|| tempPromptValue.value.trim().length < 1,
+)
 
 // Prompt模板相关操作
 const addPromptTemplate = () => {
@@ -97,11 +119,16 @@ const addPromptTemplate = () => {
       return
     }
     if (i.value === tempPromptValue.value) {
-      message.error(t('store.addRepeatContentTips', { msg: tempPromptKey.value }))
+      message.error(
+        t('store.addRepeatContentTips', { msg: tempPromptKey.value }),
+      )
       return
     }
   }
-  promptList.value.unshift({ key: tempPromptKey.value, value: tempPromptValue.value } as never)
+  promptList.value.unshift({
+    key: tempPromptKey.value,
+    value: tempPromptValue.value,
+  } as never)
   message.success(t('common.addSuccess'))
   changeShowModal('add')
 }
@@ -111,7 +138,9 @@ const modifyPromptTemplate = () => {
 
   // 通过临时索引把待修改项摘出来
   for (const i of promptList.value) {
-    if (i.key === tempModifiedItem.value.key && i.value === tempModifiedItem.value.value)
+    if (
+      i.key === tempModifiedItem.value.key && i.value === tempModifiedItem.value.value
+    )
       break
     index = index + 1
   }
@@ -130,14 +159,19 @@ const modifyPromptTemplate = () => {
     }
   }
 
-  promptList.value = [{ key: tempPromptKey.value, value: tempPromptValue.value }, ...tempList] as never
+  promptList.value = [
+    { key: tempPromptKey.value, value: tempPromptValue.value },
+    ...tempList,
+  ] as never
   message.success(t('common.editSuccess'))
   changeShowModal('modify')
 }
 
 const deletePromptTemplate = (row: { key: string; value: string }) => {
   promptList.value = [
-    ...promptList.value.filter((item: { key: string; value: string }) => item.key !== row.key),
+    ...promptList.value.filter(
+      (item: { key: string; value: string }) => item.key !== row.key,
+    ),
   ] as never
   message.success(t('common.deleteSuccess'))
 }
@@ -218,12 +252,14 @@ const downloadPromptTemplate = async () => {
     if ('key' in jsonData[0] && 'value' in jsonData[0])
       tempPromptValue.value = JSON.stringify(jsonData)
     if ('act' in jsonData[0] && 'prompt' in jsonData[0]) {
-      const newJsonData = jsonData.map((item: { act: string; prompt: string }) => {
-        return {
-          key: item.act,
-          value: item.prompt,
-        }
-      })
+      const newJsonData = jsonData.map(
+        (item: { act: string; prompt: string }) => {
+          return {
+            key: item.act,
+            value: item.prompt,
+          }
+        },
+      )
       tempPromptValue.value = JSON.stringify(newJsonData)
     }
     importPromptTemplate()
@@ -244,8 +280,14 @@ const renderTemplate = () => {
 
   return promptList.value.map((item: { key: string; value: string }) => {
     return {
-      renderKey: item.key.length <= keyLimit ? item.key : `${item.key.substring(0, keyLimit)}...`,
-      renderValue: item.value.length <= valueLimit ? item.value : `${item.value.substring(0, valueLimit)}...`,
+      renderKey:
+				item.key.length <= keyLimit
+				  ? item.key
+				  : `${item.key.substring(0, keyLimit)}...`,
+      renderValue:
+				item.value.length <= valueLimit
+				  ? item.value
+				  : `${item.value.substring(0, valueLimit)}...`,
       key: item.key,
       value: item.value,
     }
@@ -255,7 +297,8 @@ const renderTemplate = () => {
 const pagination = computed(() => {
   const [pageSize, pageSlot] = isMobile.value ? [6, 5] : [7, 15]
   return {
-    pageSize, pageSlot,
+    pageSize,
+    pageSlot,
   }
 })
 
@@ -277,42 +320,47 @@ const createColumns = (): DataTableColumns<DataProps> => {
     {
       title: t('common.action'),
       key: 'actions',
-      width: 100,
+      width: 180,
       align: 'center',
       render(row) {
-        return h('div', { class: 'flex items-center flex-col gap-2' }, {
-          default: () => [h(
-            NButton,
-            {
-              tertiary: true,
-              size: 'small',
-              type: 'info',
-              onClick: () => changeShowModal('modify', row),
-            },
-            { default: () => t('common.edit') },
-          ),
-          h(
-            NButton,
-            {
-              tertiary: true,
-              size: 'small',
-              type: 'error',
-              onClick: () => deletePromptTemplate(row),
-            },
-            { default: () => t('common.delete') },
-          ),
-          h(
-            NButton,
-            {
-              tertiary: true,
-              size: 'small',
-              type: 'info',
-              onClick: () => selectTemplate(row),
-            },
-            { default: () => t('common.select') },
-          ),
-          ],
-        })
+        return h(
+          'div',
+          { class: 'flex items-center gap-2' },
+          {
+            default: () => [
+              h(
+                NButton,
+                {
+                  tertiary: true,
+                  size: 'small',
+                  type: 'info',
+                  onClick: () => selectTemplate(row),
+                },
+                { default: () => t('common.select') },
+              ),
+              h(
+                NButton,
+                {
+                  tertiary: true,
+                  size: 'small',
+                  type: 'info',
+                  onClick: () => changeShowModal('modify', row),
+                },
+                { default: () => t('common.edit') },
+              ),
+              h(
+                NButton,
+                {
+                  tertiary: true,
+                  size: 'small',
+                  type: 'error',
+                  onClick: () => deletePromptTemplate(row),
+                },
+                { default: () => t('common.delete') },
+              ),
+            ],
+          },
+        )
       },
     },
   ]
@@ -341,7 +389,11 @@ const dataSource = computed(() => {
 </script>
 
 <template>
-  <NModal v-model:show="show" style="width: 90%; max-width: 900px;" preset="card">
+  <NModal
+    v-model:show="show"
+    style="width: 90%; max-width: 900px"
+    preset="card"
+  >
     <div class="space-y-4">
       <NTabs type="segment">
         <NTabPane name="local" :tab="$t('store.local')">
@@ -355,28 +407,25 @@ const dataSource = computed(() => {
                 size="small"
                 @click="changeShowModal('add')"
               >
-                {{ $t('common.add') }}
+                {{ $t("common.add") }}
               </NButton>
-              <NButton
-                size="small"
-                @click="changeShowModal('local_import')"
-              >
-                {{ $t('common.import') }}
+              <NButton size="small" @click="changeShowModal('local_import')">
+                {{ $t("common.import") }}
               </NButton>
               <NButton
                 size="small"
                 :loading="exportLoading"
                 @click="exportPromptTemplate()"
               >
-                {{ $t('common.export') }}
+                {{ $t("common.export") }}
               </NButton>
               <NPopconfirm @positive-click="clearPromptTemplate">
                 <template #trigger>
                   <NButton size="small">
-                    {{ $t('common.clear') }}
+                    {{ $t("common.clear") }}
                   </NButton>
                 </template>
-                {{ $t('store.clearStoreConfirm') }}
+                {{ $t("store.clearStoreConfirm") }}
               </NPopconfirm>
             </div>
             <div class="flex items-center">
@@ -391,17 +440,42 @@ const dataSource = computed(() => {
             :pagination="pagination"
             :bordered="false"
           />
-          <NList v-if="isMobile" style="max-height: 400px; overflow-y: auto;">
+          <NList v-if="isMobile" style="max-height: 400px; overflow-y: auto">
             <NListItem v-for="(item, index) of dataSource" :key="index">
               <NThing :title="item.renderKey" :description="item.renderValue" />
               <template #suffix>
-                <div class="flex flex-col items-center gap-2">
-                  <NButton tertiary size="small" type="info" @click="changeShowModal('modify', item)">
-                    {{ t('common.edit') }}
+                <div class="flex items-center gap-2">
+                  <NButton
+                    tertiary
+                    size="small"
+                    type="info"
+                    @click="selectTemplate(item)"
+                  >
+                    {{ t("common.select") }}
                   </NButton>
-                  <NButton tertiary size="small" type="error" @click="deletePromptTemplate(item)">
-                    {{ t('common.delete') }}
+                  <NButton
+                    tertiary
+                    size="small"
+                    type="info"
+                    @click="changeShowModal('modify', item)"
+                  >
+                    {{ t("common.edit") }}
                   </NButton>
+                  <NPopconfirm
+                    @positive-click="deletePromptTemplate(item)"
+                    @negative-click="() => {}"
+                  >
+                    <template #trigger>
+                      <NButton
+                        tertiary
+                        size="small"
+                        type="error"
+                      >
+                        {{ t("common.delete") }}
+                      </NButton>
+                    </template>
+                    sure?
+                  </NPopconfirm>
                 </div>
               </template>
             </NListItem>
@@ -409,7 +483,7 @@ const dataSource = computed(() => {
         </NTabPane>
         <NTabPane name="download" :tab="$t('store.online')">
           <p class="mb-4">
-            {{ $t('store.onlineImportWarning') }}
+            {{ $t("store.onlineImportWarning") }}
           </p>
           <div class="flex items-center gap-4">
             <NInput v-model:value="downloadURL" placeholder="" />
@@ -420,14 +494,15 @@ const dataSource = computed(() => {
               :loading="importLoading"
               @click="downloadPromptTemplate()"
             >
-              {{ $t('common.download') }}
+              {{ $t("common.download") }}
             </NButton>
           </div>
           <NDivider />
           <div class="max-h-[360px] overflow-y-auto space-y-4">
             <NCard
               v-for="info in promptRecommendList"
-              :key="info.key" :title="info.key"
+              :key="info.key"
+              :title="info.key"
               :bordered="true"
               embedded
             >
@@ -440,14 +515,11 @@ const dataSource = computed(() => {
               <template #footer>
                 <div class="flex items-center justify-end space-x-4">
                   <NButton text>
-                    <a
-                      :href="info.url"
-                      target="_blank"
-                    >
+                    <a :href="info.url" target="_blank">
                       <SvgIcon class="text-xl" icon="ri:link" />
                     </a>
                   </NButton>
-                  <NButton text @click="setDownloadURL(info.downloadUrl) ">
+                  <NButton text @click="setDownloadURL(info.downloadUrl)">
                     <SvgIcon class="text-xl" icon="ri:add-fill" />
                   </NButton>
                 </div>
@@ -459,19 +531,27 @@ const dataSource = computed(() => {
     </div>
   </NModal>
 
-  <NModal v-model:show="showModal" style="width: 90%; max-width: 600px;" preset="card">
+  <NModal
+    v-model:show="showModal"
+    style="width: 90%; max-width: 600px"
+    preset="card"
+  >
     <NSpace v-if="modalMode === 'add' || modalMode === 'modify'" vertical>
-      {{ t('store.title') }}
+      {{ t("store.title") }}
       <NInput v-model:value="tempPromptKey" />
-      {{ t('store.description') }}
+      {{ t("store.description") }}
       <NInput v-model:value="tempPromptValue" type="textarea" />
       <NButton
         block
         type="primary"
         :disabled="inputStatus"
-        @click="() => { modalMode === 'add' ? addPromptTemplate() : modifyPromptTemplate() }"
+        @click="
+          () => {
+            modalMode === 'add' ? addPromptTemplate() : modifyPromptTemplate();
+          }
+        "
       >
-        {{ t('common.confirm') }}
+        {{ t("common.confirm") }}
       </NButton>
     </NSpace>
     <NSpace v-if="modalMode === 'local_import'" vertical>
@@ -485,9 +565,13 @@ const dataSource = computed(() => {
         block
         type="primary"
         :disabled="inputStatus"
-        @click="() => { importPromptTemplate('local') }"
+        @click="
+          () => {
+            importPromptTemplate('local');
+          }
+        "
       >
-        {{ t('common.import') }}
+        {{ t("common.import") }}
       </NButton>
     </NSpace>
   </NModal>
