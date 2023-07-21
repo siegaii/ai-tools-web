@@ -8,6 +8,7 @@ import type { UserInfo } from '@/store/modules/user/helper'
 import { getCurrentDate } from '@/utils/functions'
 import { useBasicLayout } from '@/hooks/useBasicLayout'
 import { t } from '@/locales'
+import { getRandomAvatar } from '@/utils/common'
 
 const appStore = useAppStore()
 const userStore = useUserStore()
@@ -111,6 +112,12 @@ function handleImportButtonClick(): void {
   if (fileInput)
     fileInput.click()
 }
+
+function getAvatarLink () {
+  const link = getRandomAvatar()
+  avatar.value = link;
+  updateUserInfo({ avatar: avatar.value })
+}
 </script>
 
 <template>
@@ -123,6 +130,14 @@ function handleImportButtonClick(): void {
         <div class="flex-1">
           <NInput v-model:value="avatar" placeholder="" />
         </div>
+        <NButton
+          size="tiny"
+          text
+          type="primary"
+          @click="getAvatarLink()"
+        >
+          {{ $t("setting.getAvatarLink") }}
+        </NButton>
         <NButton
           size="tiny"
           text
