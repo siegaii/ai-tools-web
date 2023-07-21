@@ -1,4 +1,4 @@
-import config from '../../../../config.json'
+import { getRandomAvatar } from '@/utils/common'
 import { ss } from '@/utils/storage'
 
 const LOCAL_NAME = 'userStorage'
@@ -18,7 +18,7 @@ export function defaultSetting(): UserState {
   return {
     userInfo: {
       avatar: '',
-      defaultAvatar: config.user.defaultAvatar,
+      defaultAvatar: getRandomAvatar(),
       name: 'master',
       description: 'Hello Master',
     },
