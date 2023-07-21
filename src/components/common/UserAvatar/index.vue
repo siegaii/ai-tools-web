@@ -9,17 +9,22 @@ const userStore = useUserStore()
 
 const userInfo = computed(() => userStore.userInfo)
 
-const avatar = computed(() => userStore.userInfo.avatar || userStore.userInfo.defaultAvatar)
-</script>
+const avatar = computed(() => {
+  if(userInfo.value.avatar.match(/\/assets\/avatar.jpg/)){
+    return userStore.userInfo.defaultAvatar
+  }
+  return userStore.userInfo.avatar || userStore.userInfo.defaultAvatar
+})
 
+</script>
 <template>
   <div class="flex items-center overflow-hidden">
     <div class="w-10 h-10 overflow-hidden rounded-full shrink-0">
-      <template v-if="isString(userInfo.avatar) && userInfo.avatar.length > 0">
+      <template v-if="isString(avatar) && avatar.length > 0">
         <NAvatar
           size="large"
           round
-          :src="userInfo.avatar"
+          :src="avatar"
           :fallback-src="getFallbackAvatar(userInfo.name)"
         />
       </template>

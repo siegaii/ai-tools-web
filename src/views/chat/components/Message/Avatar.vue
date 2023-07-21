@@ -12,7 +12,12 @@ defineProps<Props>()
 
 const userStore = useUserStore()
 
-const avatar = computed(() => userStore.userInfo.avatar || userStore.userInfo.defaultAvatar)
+const avatar = computed(() => {
+  if(userStore.userInfo.avatar.match(/\/assets\/avatar.jpg/)){
+    return userStore.userInfo.defaultAvatar
+  }
+  return userStore.userInfo.avatar || userStore.userInfo.defaultAvatar
+})
 </script>
 
 <template>
