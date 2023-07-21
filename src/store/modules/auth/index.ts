@@ -13,6 +13,7 @@ export const useAuthStore = defineStore('auth-store', {
   }),
 
   getters: {
+    // FIXME 这里需要处理一下
     isChatGPTAPI(state): boolean {
       return false
     },
