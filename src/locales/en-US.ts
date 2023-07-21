@@ -59,6 +59,7 @@ export default {
     advanced: 'Advanced',
     config: 'Config',
     avatarLink: 'Avatar Link',
+    getAvatarLink: 'Get Avatar',
     name: 'Name',
     description: 'Description',
     role: 'Role',
