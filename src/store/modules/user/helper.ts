@@ -1,4 +1,4 @@
-import { getRandomAvatar } from '@/utils/common'
+import { getRandomAvatar } from '@/utils/avatar'
 import { ss } from '@/utils/storage'
 
 const LOCAL_NAME = 'userStorage'

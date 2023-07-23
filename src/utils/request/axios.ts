@@ -1,9 +1,9 @@
 import axios, { type AxiosResponse } from 'axios'
 import { useAuthStore } from '@/store'
+import { isWeChat } from '../is'
 
 const service = axios.create({
-  // baseURL: 'http://siegaii.com:7001/api',
-  baseURL: 'http://127.0.0.1:7001/api',
+  baseURL: isWeChat()?'http://siegaii.com:7001/api':'http://127.0.0.1:7001/api',
 })
 
 service.interceptors.request.use(
