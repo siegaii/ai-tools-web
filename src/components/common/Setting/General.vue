@@ -8,7 +8,7 @@ import type { UserInfo } from '@/store/modules/user/helper'
 import { getCurrentDate } from '@/utils/functions'
 import { useBasicLayout } from '@/hooks/useBasicLayout'
 import { t } from '@/locales'
-import { getRandomAvatar } from '@/utils/common'
+import { getRandomAvatar } from '@/utils/avatar'
 
 const appStore = useAppStore()
 const userStore = useUserStore()
