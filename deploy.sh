@@ -41,7 +41,7 @@ docker run -itd \
   -p 443:443 \
   -v /root/ai-tools-web/dist:/usr/share/nginx/html \
   -v /root/ai-tools-web/nginx:/etc/nginx/conf.d \
-  -v /etc/letsencrypt/live/siegaiii.com:/etc/nginx/certs \
+  -v /etc/letsencrypt/live/siegaii.com:/etc/nginx/certs \
   --name $image_name \
   $image_name
 
