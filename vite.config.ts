@@ -23,7 +23,6 @@ function setupPlugins(env: ImportMetaEnv): PluginOption[] {
 
 export default defineConfig((env) => {
   const viteEnv = loadEnv(env.mode, process.cwd()) as unknown as ImportMetaEnv
-
   return {
     resolve: {
       alias: {
@@ -37,7 +36,7 @@ export default defineConfig((env) => {
       open: false,
       proxy: {
         '/api': {
-          target: 'http://siegaii.com:7001',
+          target: viteEnv.VITE_APP_API_BASE_URL,
           changeOrigin: true, // 允许跨域
           rewrite: path => path.replace('/api/', '/'),
         },
