@@ -2,7 +2,7 @@ import axios, { type AxiosResponse } from 'axios'
 import { useAuthStore } from '@/store'
 
 const service = axios.create({
-  baseURL: 'https://siegaii.com/api',
+  baseURL: 'http://siegaii.com/api',
 })
 
 service.interceptors.request.use(
