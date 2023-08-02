@@ -28,8 +28,8 @@ const getContainerClass = computed(() => {
 
 <template>
 	<div
-		class="h-full dark:bg-[#24272e] transition-all pb-6"
-		:class="[isMobile ? 'p-0' : 'p-4']"
+		class="h-full dark:bg-[#24272e] transition-all"
+		:class="[isMobile ? 'p-0' : 'p-4 pb-8']"
 	>
 		<div class="h-full overflow-hidden" :class="getMobileClass">
 			<NLayout class="z-40 transition" :class="getContainerClass" has-sider>
@@ -41,7 +41,7 @@ const getContainerClass = computed(() => {
 				</NLayoutContent>
 			</NLayout>
 		</div>
-    <div style="color: #c9d1d9e0" class="flex justify-center items-center">
+    <div v-if="!isMobile" style="color: #c9d1d9e0" class="h-8 flex justify-center items-center">
       <a href="https://beian.miit.gov.cn/" target="_blank"
         >蜀ICP备2021032713号-1</a
       >
